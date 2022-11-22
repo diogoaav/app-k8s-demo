@@ -15,4 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+      run: docker build . --file Dockerfile --tag registry.digitalocean.com/microservices-demo-daav/my-app:$(date +%s)
+      run: docker login -u $USER -p $PASS
+      run: docker push . registry.digitalocean.com/microservices-demo-daav/my-app:$(date +%s)
