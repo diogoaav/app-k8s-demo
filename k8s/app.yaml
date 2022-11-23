@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: my-app
-        image: registry.digitalocean.com/microservices-demo-daav/my-python-app:latest
+        image: $IMAGE
         resources:
           limits:
             cpu: 500m
