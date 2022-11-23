@@ -58,9 +58,15 @@ jobs:
       - name: Connect to K8s cluster
         run: doctl kubernetes cluster kubeconfig save ${{ secrets.K8s_ACCESS }}
         
-      - name: Install Kubectl
-        run: kubectl get pods
-        
+      - name: Test Kubectl
+        run: kubectl get all
+      
+      - name: Replace image in config
+      uses: ./.github/actions/replace
+      with:
+        files: /k8s/app.yaml
+        replacements: '$IMAGE=$(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)'
+    
         
 #      - name: Apply new pod config with new container
 #        run: 
