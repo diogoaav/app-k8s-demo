@@ -74,7 +74,7 @@ jobs:
           
           
       - name: Replace image in config
-        uses: ./.github/actions/replace
+        uses: datamonsters/replace-action@v2
         with:
           files: /k8s/app.yaml
           replacements: '$IMAGE=$(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)'
