@@ -60,8 +60,6 @@ jobs:
       - name: Test Kubectl
         run: kubectl get all
         
-      - name: ls
-        run: ls
 
 #      - name: Update Image Version in app.yaml
 #        uses: fjogeleit/yaml-update-action@main
@@ -76,10 +74,10 @@ jobs:
           
           
       - name: Replace image in config
-      uses: ./.github/actions/replace
-      with:
-        files: /k8s/app.yaml
-        replacements: '$IMAGE=$(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)'
+        uses: ./.github/actions/replace
+        with:
+          files: /k8s/app.yaml
+          replacements: '$IMAGE=$(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)'
     
         
 #      - name: Apply new pod config with new container
