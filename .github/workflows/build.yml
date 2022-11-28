@@ -60,11 +60,14 @@ jobs:
       - name: Test Kubectl
         run: kubectl get all
         
+      - name: dir
+        run: ls
+        
       - name: Export Image Name
         run: export IMAGE="$(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)"
         
       - name: Kubectl Apply
-        working-directory: ./k8s
+        working-directory: k8s
         run: envsubst < app.yaml | kubectl apply -f -
 
 #      - name: Update Image Version in app.yaml
