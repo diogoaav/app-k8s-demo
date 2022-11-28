@@ -60,8 +60,12 @@ jobs:
       - name: Test Kubectl
         run: kubectl get all
         
-      - name: ls
-        run: ls       
+      - name: Export Image Name
+        run: export IMAGE="$(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)"
+        
+      - name: Kubectl Apply
+        working-directory: ./k8s
+        run: envsubst < app.yaml | kubectl apply -f -
 
 #      - name: Update Image Version in app.yaml
 #        uses: fjogeleit/yaml-update-action@main
@@ -75,11 +79,11 @@ jobs:
 #          message: 'Update Image Version to ${{ steps.image.outputs.version }}' 
           
           
-      - name: Replace image in config
-        uses: datamonsters/replace-action@v2
-        with:
-          files: k8s/app.yaml
-          replacements: '$IMAGE=$(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)'
+#      - name: Replace image in config
+#        uses: datamonsters/replace-action@v2
+#        with:
+#          files: k8s/app.yaml
+#          replacements: '$IMAGE=$(echo $REGISTRY)/$(echo $IMAGE_NAME):$(echo $GITHUB_SHA | head -c7)'
     
         
 #      - name: Apply new pod config with new container
